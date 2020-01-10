@@ -15,11 +15,11 @@ class ListMaker(commands.Cog):
 		)
 		
 	@commands.group()
-	async def listmaker(self, ctx):
+	async def list(self, ctx):
 		"""Group command for ListMaker."""
 		pass
 		
-	@listmaker.command()
+	@list.command()
 	async def create(self, ctx, list_name, *column_names):
 		"""
 		Create a new list.
@@ -28,7 +28,7 @@ class ListMaker(commands.Cog):
 		Wrap any names that require spaces in quotes.
 		
 		Example:
-		`[p]listmaker create "My friends" name age`
+		`[p]list create "My friends" name age`
 		"""
 		async with self.config.lists() as lists:
 			if list_name in lists:
@@ -41,7 +41,7 @@ class ListMaker(commands.Cog):
 			}
 		await ctx.send(f'List `{list_name}` created.')
 		
-	@listmaker.command()
+	@list.command()
 	async def add(self, ctx, list_name, *values):
 		"""
 		Add a row of data to a list.
@@ -50,7 +50,7 @@ class ListMaker(commands.Cog):
 		Wrap anything that requires spaces in quotes.
 		
 		Example:
-		`[p]listmaker add "My friends" "Robert Smith" 26`
+		`[p]list add "My friends" "Robert Smith" 26`
 		"""
 		async with self.config.lists() as lists:
 			if list_name not in lists:
@@ -65,7 +65,7 @@ class ListMaker(commands.Cog):
 			lists[list_name]['data'].append(values)
 		await ctx.send('Data added.')
 	
-	@listmaker.command()
+	@list.command()
 	async def remove(self, ctx, list_name, row_number: int):
 		"""
 		Remove a row of data from a list.
@@ -74,7 +74,7 @@ class ListMaker(commands.Cog):
 		Wrap the list name in quotes if it requires spaces.
 		
 		Example:
-		`[p]listmaker remove "My friends" 3`
+		`[p]list remove "My friends" 3`
 		"""
 		async with self.config.lists() as lists:
 			if list_name not in lists:
@@ -93,7 +93,7 @@ class ListMaker(commands.Cog):
 		
 		await ctx.send('Data removed.')
 	
-	@listmaker.command()
+	@list.command()
 	async def show(self, ctx, list_name):
 		"""
 		View the data of a list.
@@ -101,7 +101,7 @@ class ListMaker(commands.Cog):
 		Wrap the list name in quotes if it requires spaces.
 		
 		Example:
-		`[p]listmaker show "My friends"`
+		`[p]list show "My friends"`
 		"""
 		lists = await self.config.lists()
 		if list_name not in lists:
@@ -113,7 +113,7 @@ class ListMaker(commands.Cog):
 		box_paged = (f'```{x}```' for x in paged)
 		await ctx.send_interactive(box_paged)
 	
-	@listmaker.command()
+	@list.command()
 	async def delete(self, ctx, list_name):
 		"""
 		Delete a list.
@@ -122,7 +122,7 @@ class ListMaker(commands.Cog):
 		Wrap the list name in quotes if it requires spaces.
 		
 		Example:
-		`[p]listmaker delete "My friends"`
+		`[p]list delete "My friends"`
 		"""
 		async with self.config.lists() as lists:
 			if list_name not in lists:
@@ -134,10 +134,10 @@ class ListMaker(commands.Cog):
 			del lists[list_name]
 		await ctx.send(f'List {list_name} deleted.')
 	
-	@listmaker.command()
+	@list.command()
 	async def list(self, ctx):
 		"""
-		List the existing listmaker lists.
+		List the lists.
 		
 		Also shows the user id of the author of each list.
 		"""
