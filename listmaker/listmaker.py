@@ -14,12 +14,12 @@ class ListMaker(commands.Cog):
 			lists = {}
 		)
 		
-	@commands.group()
-	async def list(self, ctx):
+	@commands.group(name=list)
+	async def list_group(self, ctx):
 		"""Group command for ListMaker."""
 		pass
 		
-	@list.command()
+	@list_group.command()
 	async def create(self, ctx, list_name, *column_names):
 		"""
 		Create a new list.
@@ -41,7 +41,7 @@ class ListMaker(commands.Cog):
 			}
 		await ctx.send(f'List `{list_name}` created.')
 		
-	@list.command()
+	@list_group.command()
 	async def add(self, ctx, list_name, *values):
 		"""
 		Add a row of data to a list.
@@ -65,7 +65,7 @@ class ListMaker(commands.Cog):
 			lists[list_name]['data'].append(values)
 		await ctx.send('Data added.')
 	
-	@list.command()
+	@list_group.command()
 	async def remove(self, ctx, list_name, row_number: int):
 		"""
 		Remove a row of data from a list.
@@ -93,7 +93,7 @@ class ListMaker(commands.Cog):
 		
 		await ctx.send('Data removed.')
 	
-	@list.command()
+	@list_group.command()
 	async def show(self, ctx, list_name):
 		"""
 		View the data of a list.
@@ -113,7 +113,7 @@ class ListMaker(commands.Cog):
 		box_paged = (f'```{x}```' for x in paged)
 		await ctx.send_interactive(box_paged)
 	
-	@list.command()
+	@list_group.command()
 	async def delete(self, ctx, list_name):
 		"""
 		Delete a list.
@@ -134,7 +134,7 @@ class ListMaker(commands.Cog):
 			del lists[list_name]
 		await ctx.send(f'List {list_name} deleted.')
 	
-	@list.command()
+	@list_group.command()
 	async def list(self, ctx):
 		"""
 		List the lists.
