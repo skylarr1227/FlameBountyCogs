@@ -14,7 +14,7 @@ class ListMaker(commands.Cog):
 			lists = {}
 		)
 		
-	@commands.group(name=list)
+	@commands.group(name='list')
 	async def list_group(self, ctx):
 		"""Group command for ListMaker."""
 		pass
